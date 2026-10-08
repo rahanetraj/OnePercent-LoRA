@@ -1,0 +1,94 @@
+Map:   0%|          | 0/20000 [00:00<?, ? examples/s]Map:  20%|██        | 4000/20000 [00:00<00:00, 27504.85 examples/s]Map:  40%|████      | 8000/20000 [00:00<00:00, 25913.06 examples/s]Map:  60%|██████    | 12000/20000 [00:00<00:00, 18893.87 examples/s]Map:  80%|████████  | 16000/20000 [00:00<00:00, 20462.94 examples/s]Map: 100%|██████████| 20000/20000 [00:00<00:00, 21616.13 examples/s]Map: 100%|██████████| 20000/20000 [00:00<00:00, 21554.24 examples/s]
+Map:   0%|          | 0/872 [00:00<?, ? examples/s]Map: 100%|██████████| 872/872 [00:00<00:00, 34844.97 examples/s]
+Some weights of DistilBertForSequenceClassification were not initialized from the model checkpoint at distilbert-base-uncased and are newly initialized: ['classifier.bias', 'classifier.weight', 'pre_classifier.bias', 'pre_classifier.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+2026-10-08 05:30:48,709 INFO [head] paramètres entraînables : 592,130 / 66,955,010 (0.884 %)
+2026-10-08 05:31:16,030 INFO [head] epoch 1 step 200/1250 loss 0.5115
+2026-10-08 05:31:42,123 INFO [head] epoch 1 step 400/1250 loss 0.4767
+2026-10-08 05:32:08,868 INFO [head] epoch 1 step 600/1250 loss 0.2828
+2026-10-08 05:32:16,919 INFO [head] epoch 1 — val acc 0.8303 f1 0.8363
+2026-10-08 05:32:40,023 INFO [head] epoch 2 step 800/1250 loss 0.2993
+2026-10-08 05:33:06,715 INFO [head] epoch 2 step 1000/1250 loss 0.2411
+2026-10-08 05:33:32,836 INFO [head] epoch 2 step 1200/1250 loss 0.2951
+2026-10-08 05:33:44,397 INFO [head] epoch 2 — val acc 0.8314 f1 0.8358
+2026-10-08 05:33:50,583 INFO [head] terminé en 175.0 s — acc 0.8314 — pic GPU 393 Mo
+Map:   0%|          | 0/20000 [00:00<?, ? examples/s]Map:  15%|█▌        | 3000/20000 [00:00<00:00, 20876.39 examples/s]Map:  30%|███       | 6000/20000 [00:00<00:00, 19568.23 examples/s]Map:  45%|████▌     | 9000/20000 [00:00<00:00, 19885.77 examples/s]Map:  55%|█████▌    | 11000/20000 [00:00<00:00, 19088.76 examples/s]Map:  65%|██████▌   | 13000/20000 [00:00<00:00, 19265.63 examples/s]Map:  75%|███████▌  | 15000/20000 [00:00<00:00, 14893.79 examples/s]Map:  85%|████████▌ | 17000/20000 [00:00<00:00, 15828.58 examples/s]Map:  95%|█████████▌| 19000/20000 [00:01<00:00, 16592.47 examples/s]Map: 100%|██████████| 20000/20000 [00:01<00:00, 17393.64 examples/s]
+Map:   0%|          | 0/872 [00:00<?, ? examples/s]Map: 100%|██████████| 872/872 [00:00<00:00, 24046.40 examples/s]
+Some weights of DistilBertForSequenceClassification were not initialized from the model checkpoint at distilbert-base-uncased and are newly initialized: ['classifier.bias', 'classifier.weight', 'pre_classifier.bias', 'pre_classifier.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+2026-10-08 05:34:16,923 INFO [lora_r4] paramètres entraînables : 665,858 / 67,620,868 (0.985 %)
+2026-10-08 05:35:04,560 INFO [lora_r4] epoch 1 step 200/1250 loss 0.3844
+2026-10-08 05:35:50,764 INFO [lora_r4] epoch 1 step 400/1250 loss 0.2626
+2026-10-08 05:36:38,022 INFO [lora_r4] epoch 1 step 600/1250 loss 0.3097
+2026-10-08 05:36:49,150 INFO [lora_r4] epoch 1 — val acc 0.8727 f1 0.8696
+2026-10-08 05:37:30,258 INFO [lora_r4] epoch 2 step 800/1250 loss 0.3164
+2026-10-08 05:38:16,917 INFO [lora_r4] epoch 2 step 1000/1250 loss 0.1941
+2026-10-08 05:39:03,767 INFO [lora_r4] epoch 2 step 1200/1250 loss 0.1290
+2026-10-08 05:39:20,581 INFO [lora_r4] epoch 2 — val acc 0.8911 f1 0.8931
+/home/rahanetra-fanasina-jason/Documents/M1/PYTHON AVANCÉ/projet_lora/.venv/lib/python3.12/site-packages/peft/utils/other.py:689: UserWarning: Unable to fetch remote file due to the following error (ReadTimeoutError("HTTPSConnectionPool(host='huggingface.co', port=443): Read timed out. (read timeout=10)"), '(Request ID: 01b322ac-9a85-45cc-8db2-884c5f9f5c4e)') - silently ignoring the lookup for the file config.json in distilbert-base-uncased.
+  warnings.warn(
+/home/rahanetra-fanasina-jason/Documents/M1/PYTHON AVANCÉ/projet_lora/.venv/lib/python3.12/site-packages/peft/utils/save_and_load.py:243: UserWarning: Could not find a config file in distilbert-base-uncased - will assume that the vocabulary was not modified.
+  warnings.warn(
+2026-10-08 05:39:35,719 INFO [lora_r4] terminé en 302.8 s — acc 0.8911 — pic GPU 800 Mo
+Map:   0%|          | 0/20000 [00:00<?, ? examples/s]Map:  10%|█         | 2000/20000 [00:00<00:01, 15784.68 examples/s]Map:  20%|██        | 4000/20000 [00:00<00:01, 15340.66 examples/s]Map:  30%|███       | 6000/20000 [00:00<00:01, 13995.64 examples/s]Map:  40%|████      | 8000/20000 [00:00<00:00, 14746.66 examples/s]Map:  50%|█████     | 10000/20000 [00:00<00:00, 14766.13 examples/s]Map:  60%|██████    | 12000/20000 [00:00<00:00, 12140.09 examples/s]Map:  70%|███████   | 14000/20000 [00:01<00:00, 13167.05 examples/s]Map:  80%|████████  | 16000/20000 [00:01<00:00, 14526.74 examples/s]Map:  90%|█████████ | 18000/20000 [00:01<00:00, 14362.81 examples/s]Map: 100%|██████████| 20000/20000 [00:01<00:00, 14639.86 examples/s]Map: 100%|██████████| 20000/20000 [00:01<00:00, 14123.03 examples/s]
+Map:   0%|          | 0/872 [00:00<?, ? examples/s]Map: 100%|██████████| 872/872 [00:00<00:00, 17831.05 examples/s]
+Some weights of DistilBertForSequenceClassification were not initialized from the model checkpoint at distilbert-base-uncased and are newly initialized: ['classifier.bias', 'classifier.weight', 'pre_classifier.bias', 'pre_classifier.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+2026-10-08 05:40:04,557 INFO [lora_r8] paramètres entraînables : 739,586 / 67,694,596 (1.093 %)
+2026-10-08 05:40:52,455 INFO [lora_r8] epoch 1 step 200/1250 loss 0.2919
+2026-10-08 05:41:38,563 INFO [lora_r8] epoch 1 step 400/1250 loss 0.1173
+2026-10-08 05:42:25,301 INFO [lora_r8] epoch 1 step 600/1250 loss 0.1826
+2026-10-08 05:42:36,192 INFO [lora_r8] epoch 1 — val acc 0.8739 f1 0.8810
+2026-10-08 05:43:17,739 INFO [lora_r8] epoch 2 step 800/1250 loss 0.2046
+2026-10-08 05:44:05,061 INFO [lora_r8] epoch 2 step 1000/1250 loss 0.2006
+2026-10-08 05:44:51,165 INFO [lora_r8] epoch 2 step 1200/1250 loss 0.2970
+2026-10-08 05:45:07,743 INFO [lora_r8] epoch 2 — val acc 0.8819 f1 0.8872
+2026-10-08 05:45:13,752 INFO [lora_r8] terminé en 302.2 s — acc 0.8819 — pic GPU 804 Mo
+Map:   0%|          | 0/20000 [00:00<?, ? examples/s]Map:  20%|██        | 4000/20000 [00:00<00:00, 24568.50 examples/s]Map:  40%|████      | 8000/20000 [00:00<00:00, 23648.94 examples/s]Map:  60%|██████    | 12000/20000 [00:00<00:00, 18817.23 examples/s]Map:  75%|███████▌  | 15000/20000 [00:00<00:00, 19581.41 examples/s]Map:  90%|█████████ | 18000/20000 [00:00<00:00, 19966.22 examples/s]Map: 100%|██████████| 20000/20000 [00:00<00:00, 20297.70 examples/s]
+Map:   0%|          | 0/872 [00:00<?, ? examples/s]Map: 100%|██████████| 872/872 [00:00<00:00, 29005.84 examples/s]
+Some weights of DistilBertForSequenceClassification were not initialized from the model checkpoint at distilbert-base-uncased and are newly initialized: ['classifier.bias', 'classifier.weight', 'pre_classifier.bias', 'pre_classifier.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+2026-10-08 05:45:37,048 INFO [lora_r16] paramètres entraînables : 887,042 / 67,842,052 (1.308 %)
+2026-10-08 05:46:25,168 INFO [lora_r16] epoch 1 step 200/1250 loss 0.3838
+2026-10-08 05:47:11,997 INFO [lora_r16] epoch 1 step 400/1250 loss 0.2456
+2026-10-08 05:47:58,910 INFO [lora_r16] epoch 1 step 600/1250 loss 0.2589
+2026-10-08 05:48:09,336 INFO [lora_r16] epoch 1 — val acc 0.8750 f1 0.8827
+2026-10-08 05:48:49,581 INFO [lora_r16] epoch 2 step 800/1250 loss 0.2778
+2026-10-08 05:49:37,091 INFO [lora_r16] epoch 2 step 1000/1250 loss 0.3819
+2026-10-08 05:50:23,897 INFO [lora_r16] epoch 2 step 1200/1250 loss 0.3713
+2026-10-08 05:50:40,301 INFO [lora_r16] epoch 2 — val acc 0.8888 f1 0.8926
+2026-10-08 05:50:46,174 INFO [lora_r16] terminé en 302.3 s — acc 0.8888 — pic GPU 806 Mo
+Map:   0%|          | 0/20000 [00:00<?, ? examples/s]Map:  15%|█▌        | 3000/20000 [00:00<00:00, 17982.96 examples/s]Map:  25%|██▌       | 5000/20000 [00:00<00:00, 18685.87 examples/s]Map:  45%|████▌     | 9000/20000 [00:00<00:00, 19581.60 examples/s]Map:  55%|█████▌    | 11000/20000 [00:00<00:00, 18086.99 examples/s]Map:  65%|██████▌   | 13000/20000 [00:00<00:00, 13579.58 examples/s]Map:  75%|███████▌  | 15000/20000 [00:00<00:00, 14705.91 examples/s]Map:  95%|█████████▌| 19000/20000 [00:01<00:00, 17152.70 examples/s]Map: 100%|██████████| 20000/20000 [00:01<00:00, 16837.73 examples/s]
+Map:   0%|          | 0/872 [00:00<?, ? examples/s]Map: 100%|██████████| 872/872 [00:00<00:00, 26550.66 examples/s]
+Some weights of DistilBertForSequenceClassification were not initialized from the model checkpoint at distilbert-base-uncased and are newly initialized: ['classifier.bias', 'classifier.weight', 'pre_classifier.bias', 'pre_classifier.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+2026-10-08 05:51:07,363 INFO [lora_scratch_r8] paramètres entraînables : 739,586 / 67,102,466 (1.102 %)
+2026-10-08 05:51:55,726 INFO [lora_scratch_r8] epoch 1 step 200/1250 loss 0.3616
+2026-10-08 05:52:43,206 INFO [lora_scratch_r8] epoch 1 step 400/1250 loss 0.0771
+2026-10-08 05:53:29,023 INFO [lora_scratch_r8] epoch 1 step 600/1250 loss 0.1951
+2026-10-08 05:53:40,387 INFO [lora_scratch_r8] epoch 1 — val acc 0.8819 f1 0.8857
+2026-10-08 05:54:21,560 INFO [lora_scratch_r8] epoch 2 step 800/1250 loss 0.3390
+2026-10-08 05:55:07,629 INFO [lora_scratch_r8] epoch 2 step 1000/1250 loss 0.3050
+2026-10-08 05:55:54,398 INFO [lora_scratch_r8] epoch 2 step 1200/1250 loss 0.2435
+2026-10-08 05:56:10,976 INFO [lora_scratch_r8] epoch 2 — val acc 0.8807 f1 0.8834
+2026-10-08 05:56:16,114 INFO [lora_scratch_r8] terminé en 302.6 s — acc 0.8807 — pic GPU 801 Mo
+Map:   0%|          | 0/20000 [00:00<?, ? examples/s]Map:  20%|██        | 4000/20000 [00:00<00:00, 27019.06 examples/s]Map:  40%|████      | 8000/20000 [00:00<00:00, 24385.82 examples/s]Map:  60%|██████    | 12000/20000 [00:00<00:00, 19268.37 examples/s]Map:  80%|████████  | 16000/20000 [00:00<00:00, 20309.61 examples/s]Map:  95%|█████████▌| 19000/20000 [00:00<00:00, 19015.35 examples/s]Map: 100%|██████████| 20000/20000 [00:01<00:00, 19967.76 examples/s]
+Map:   0%|          | 0/872 [00:00<?, ? examples/s]Map: 100%|██████████| 872/872 [00:00<00:00, 28003.78 examples/s]
+Some weights of DistilBertForSequenceClassification were not initialized from the model checkpoint at distilbert-base-uncased and are newly initialized: ['classifier.bias', 'classifier.weight', 'pre_classifier.bias', 'pre_classifier.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+2026-10-08 05:56:41,631 INFO [full] paramètres entraînables : 66,955,010 / 66,955,010 (100.000 %)
+2026-10-08 05:57:52,795 INFO [full] epoch 1 step 200/1250 loss 0.4335
+2026-10-08 05:59:01,918 INFO [full] epoch 1 step 400/1250 loss 0.3960
+2026-10-08 06:00:12,261 INFO [full] epoch 1 step 600/1250 loss 0.2906
+2026-10-08 06:00:25,680 INFO [full] epoch 1 — val acc 0.8899 f1 0.8916
+2026-10-08 06:01:26,736 INFO [full] epoch 2 step 800/1250 loss 0.0860
+2026-10-08 06:02:36,467 INFO [full] epoch 2 step 1000/1250 loss 0.0663
+2026-10-08 06:03:45,651 INFO [full] epoch 2 step 1200/1250 loss 0.1065
+2026-10-08 06:04:08,240 INFO [full] epoch 2 — val acc 0.8933 f1 0.8977
+2026-10-08 06:04:13,939 INFO [full] terminé en 445.4 s — acc 0.8933 — pic GPU 1442 Mo
+Tête seule                  592,130   0.88% acc=83.14 f1=83.58   2.9min   229éch/s   393Mo   255.43Mo
+LoRA r=4                    665,858   0.98% acc=89.11 f1=89.31   5.0min   132éch/s   800Mo     2.55Mo
+LoRA r=8                    739,586   1.09% acc=88.19 f1=88.72   5.0min   132éch/s   804Mo     2.83Mo
+LoRA r=16                   887,042   1.31% acc=88.88 f1=89.26   5.0min   132éch/s   806Mo     3.39Mo
+LoRA maison r=8             739,586   1.10% acc=88.07 f1=88.34   5.0min   132éch/s   801Mo     2.83Mo
+Fine-tuning complet      66,955,010 100.00% acc=89.33 f1=89.77   7.4min    90éch/s  1442Mo   255.43Mo

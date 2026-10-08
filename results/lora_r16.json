@@ -1,0 +1,206 @@
+{
+  "config": {
+    "method": "lora",
+    "model_name": "distilbert-base-uncased",
+    "rank": 16,
+    "alpha": 16.0,
+    "lora_dropout": 0.1,
+    "target_modules": [
+      "q_lin",
+      "v_lin"
+    ],
+    "epochs": 2,
+    "batch_size": 32,
+    "lr": 0.0005,
+    "max_length": 128,
+    "train_samples": 20000,
+    "seed": 42,
+    "run_name": "lora_r16"
+  },
+  "params": {
+    "total": 67842052,
+    "trainable": 887042,
+    "ratio_pct": 1.307510568813573
+  },
+  "metrics": {
+    "loss": 0.27847674595458166,
+    "accuracy": 0.8887614678899083,
+    "f1": 0.8925802879291251,
+    "confusion_matrix": [
+      [
+        372,
+        56
+      ],
+      [
+        41,
+        403
+      ]
+    ]
+  },
+  "profiling": {
+    "train_time_s": 302.2649196439961,
+    "epoch_times_s": [
+      146.26913458800118,
+      145.99886971199885
+    ],
+    "data_prep_s": 12.83986501799518,
+    "inference_time_s": 4.966396843003167,
+    "train_samples_per_s": 132.3342452280321,
+    "train_tokens_per_s": 1757.6105114206312,
+    "gpu_peak_train_mb": 805.6396484375,
+    "gpu_peak_inference_mb": 399.4912109375,
+    "checkpoint_size_mb": 3.3930492401123047,
+    "steps": 1250
+  },
+  "history": [
+    {
+      "step": 50,
+      "epoch": 1,
+      "train_loss": 0.27842268347740173
+    },
+    {
+      "step": 100,
+      "epoch": 1,
+      "train_loss": 0.44511765241622925
+    },
+    {
+      "step": 150,
+      "epoch": 1,
+      "train_loss": 0.26741814613342285
+    },
+    {
+      "step": 200,
+      "epoch": 1,
+      "train_loss": 0.38375428318977356
+    },
+    {
+      "step": 250,
+      "epoch": 1,
+      "train_loss": 0.2796425223350525
+    },
+    {
+      "step": 300,
+      "epoch": 1,
+      "train_loss": 0.21325325965881348
+    },
+    {
+      "step": 350,
+      "epoch": 1,
+      "train_loss": 0.2893691658973694
+    },
+    {
+      "step": 400,
+      "epoch": 1,
+      "train_loss": 0.24563047289848328
+    },
+    {
+      "step": 450,
+      "epoch": 1,
+      "train_loss": 0.38202154636383057
+    },
+    {
+      "step": 500,
+      "epoch": 1,
+      "train_loss": 0.4183679223060608
+    },
+    {
+      "step": 550,
+      "epoch": 1,
+      "train_loss": 0.31128597259521484
+    },
+    {
+      "step": 600,
+      "epoch": 1,
+      "train_loss": 0.2589201033115387
+    },
+    {
+      "step": 625,
+      "epoch": 1,
+      "val_loss": 0.2982878418905394,
+      "val_accuracy": 0.875
+    },
+    {
+      "step": 650,
+      "epoch": 2,
+      "train_loss": 0.43678826093673706
+    },
+    {
+      "step": 700,
+      "epoch": 2,
+      "train_loss": 0.0985347181558609
+    },
+    {
+      "step": 750,
+      "epoch": 2,
+      "train_loss": 0.4053504765033722
+    },
+    {
+      "step": 800,
+      "epoch": 2,
+      "train_loss": 0.27782371640205383
+    },
+    {
+      "step": 850,
+      "epoch": 2,
+      "train_loss": 0.1506747603416443
+    },
+    {
+      "step": 900,
+      "epoch": 2,
+      "train_loss": 0.13363562524318695
+    },
+    {
+      "step": 950,
+      "epoch": 2,
+      "train_loss": 0.26167285442352295
+    },
+    {
+      "step": 1000,
+      "epoch": 2,
+      "train_loss": 0.3819020986557007
+    },
+    {
+      "step": 1050,
+      "epoch": 2,
+      "train_loss": 0.35054510831832886
+    },
+    {
+      "step": 1100,
+      "epoch": 2,
+      "train_loss": 0.17881035804748535
+    },
+    {
+      "step": 1150,
+      "epoch": 2,
+      "train_loss": 0.3319322466850281
+    },
+    {
+      "step": 1200,
+      "epoch": 2,
+      "train_loss": 0.3712596595287323
+    },
+    {
+      "step": 1250,
+      "epoch": 2,
+      "train_loss": 0.279340922832489
+    },
+    {
+      "step": 1250,
+      "epoch": 2,
+      "val_loss": 0.27847674595458166,
+      "val_accuracy": 0.8887614678899083
+    }
+  ],
+  "machine": {
+    "os": "Linux 7.0.0-34-generic",
+    "python": "3.12.9",
+    "torch": "2.5.1+cu121",
+    "cpu": "Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz",
+    "cpu_cores": "4 physiques / 8 logiques",
+    "ram_gb": "15.3",
+    "gpu": "NVIDIA GeForce GTX 1050",
+    "gpu_mem_gb": "3.9",
+    "cuda": "12.1",
+    "compute_capability": "6.1"
+  }
+}

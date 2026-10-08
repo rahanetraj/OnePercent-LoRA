@@ -1,0 +1,99 @@
+%=====================================================================
+\section{Résultats et discussion}\label{sec:res}
+%=====================================================================
+\subsection{Contexte expérimental}
+Les six configurations ont été entraînées l'une après l'autre sur la même machine, avec les mêmes 20\,000 phrases, le même ordre de lots (graine 42) et les mêmes hyperparamètres (2 époques, soit $T=1250$ pas). Les métriques sont mesurées sur les 872 phrases de validation de SST-2, dont 428 négatives et 444 positives. Toutes les durées sont mesurées après synchronisation CUDA (\texttt{torch.cuda.synchronize}). La mémoire est le pic alloué par PyTorch sur le GPU pendant l'entraînement. L'ensemble des expériences est reproductible avec la commande \texttt{./run\_experiments.sh}.
+
+\subsection{Configuration de l'ordinateur}
+\begin{table}[H]\centering\small
+\begin{tabular}{ll}\toprule
+Processeur & Intel Core i5-8300H @ 2,30~GHz (4 cœurs physiques / 8 logiques)\\
+Mémoire vive & 15,3~Go\\
+GPU & NVIDIA GeForce GTX~1050, 4~Go GDDR5 (architecture Pascal, capacité de calcul 6.1)\\
+Pilote / CUDA & NVIDIA 535.309 / CUDA~12.1 (runtime PyTorch)\\
+Système & Linux (noyau 7.0), Python~3.12.9\\
+Bibliothèques & PyTorch~2.5.1, Transformers~4.46.3, PEFT~0.13.2, Datasets~3.1.0, Gradio~5.9.1\\
+\bottomrule\end{tabular}
+\caption{Matériel et logiciels utilisés. La GTX~1050 n'est plus prise en charge par PyTorch $\geq2.6$. Sur cette architecture, le calcul en fp16 est très lent, d'où l'entraînement en fp32.}
+\end{table}
+
+\subsection{Performances de classification}
+\begin{table}[H]\centering
+\resizebox{\textwidth}{!}{\input{../figures/summary_table.tex}}
+\caption{Synthèse des six expériences. « \% » : part des paramètres entraînés. Acc. et F1 en \% sur la validation SST-2. Éch./s : débit d'entraînement. GPU : pic mémoire à l'entraînement. Disque : taille du checkpoint sauvegardé.}
+\label{tab:res}
+\end{table}
+
+\begin{figure}[H]\centering
+\includegraphics[width=\textwidth]{accuracy_params.pdf}
+\caption{Gauche : accuracy de validation. Droite : nombre de paramètres entraînables (échelle logarithmique).}
+\label{fig:acc}
+\end{figure}
+
+Le tableau~\ref{tab:res} et la figure~\ref{fig:acc} conduisent à trois constats.
+\begin{enumerate}
+\item \textbf{LoRA approche le fine-tuning complet avec environ 90 fois moins de paramètres.} La meilleure configuration LoRA ($r=4$, 89,11\,\%) est à $0{,}22$ point du fine-tuning complet (89,33\,\%) tout en n'entraînant que $0{,}98\,\%$ des paramètres.
+\item \textbf{Adapter l'encodeur est indispensable.} Entraîner seulement la tête plafonne à 83,14\,\%. Avec à peine $73\,728$ paramètres LoRA de plus ($r=4$), on gagne $+6$ points. C'est bien la petite mise à jour $\Delta W$ des matrices d'attention qui apporte l'adaptation.
+\item \textbf{Le rang a peu d'influence.} Les écarts entre $r=4$, $8$ et $16$ (88,2 à 89,1\,\%) sont inférieurs au bruit statistique. Pour une accuracy $p\approx0{,}89$ mesurée sur $n=872$ exemples, l'intervalle de confiance à 95\,\% vaut
+\begin{equation}
+\text{IC}_{95\,\%}=\hat p\pm1{,}96\sqrt{\frac{\hat p(1-\hat p)}{n}}\approx\hat p\pm2{,}1\ \text{points}.
+\end{equation}
+Toutes les variantes LoRA et le fine-tuning complet sont donc \emph{statistiquement équivalentes}, ce qui rejoint l'observation de \cite{hu2021lora} : un très petit rang suffit.
+\end{enumerate}
+Notre \textbf{LoRA maison} (88,07\,\%) et celle de \textbf{PEFT} (88,19\,\%), toutes deux de rang 8, ont exactement le même nombre de paramètres entraînables (739\,586, comme prévu par l'équation de la section~2) et des courbes d'apprentissage comparables. Cela valide notre implémentation. Le total légèrement plus élevé chez PEFT (67,69~M contre 67,10~M) vient de la copie de la tête qu'il conserve (\texttt{modules\_to\_save}). Les matrices de confusion sont équilibrées. Pour LoRA $r=4$ : $\left(\begin{smallmatrix}380&48\\47&397\end{smallmatrix}\right)$, soit autant de faux positifs que de faux négatifs.
+
+\subsection{Profilage : durée, mémoire et stockage}
+\begin{figure}[H]\centering
+\includegraphics[width=\textwidth]{profiling.pdf}
+\caption{Profilage mesuré sur la GTX~1050. Gauche : durée d'entraînement (2 époques). Centre : pic de mémoire GPU. Droite : taille sauvegardée (échelle logarithmique).}
+\label{fig:prof}
+\end{figure}
+
+\paragraph{Durée d'entraînement.} Une époque prend 83~s pour la tête seule, 146~s pour LoRA (quel que soit $r$) et 218~s pour le fine-tuning complet. Le débit est respectivement de 229, 132 et 90 échantillons par seconde, soit environ 3\,040, 1\,760 et 1\,190 jetons par seconde. La préparation des données (tokenisation) prend environ 13~s. Le gain de LoRA ($-32\,\%$) s'explique par un modèle de coût simple. Si la passe avant coûte $F$, la rétropropagation coûte $\approx2F$ : $F$ pour les gradients des activations et $F$ pour ceux des poids. LoRA doit encore propager les gradients à travers l'encodeur gelé, mais ne calcule plus les gradients des poids $W_0$ :
+\begin{equation}
+\frac{T_{\text{LoRA}}}{T_{\text{full}}}\approx\frac{F+F}{F+2F}=\frac23\approx0{,}67
+\qquad\text{contre}\qquad \frac{302{,}2\ \text{s}}{445{,}4\ \text{s}}=0{,}68\ \text{mesuré.}
+\end{equation}
+La tête seule n'a pas de rétropropagation dans l'encodeur ($\approx F$), d'où un rapport de $0{,}39$ mesuré, pour $1/3$ attendu. La différence vient de la tokenisation et des transferts, qui ne dépendent pas de la méthode.
+
+\paragraph{Mémoire GPU.} Le pic passe de 1\,442~Mo (fine-tuning complet) à environ 804~Mo (LoRA), soit $-44\,\%$. Cela concorde avec l'équation de la mémoire statique : $16|\Theta|\approx1{,}07$~Go en fine-tuning complet, contre $\approx0{,}28$~Go pour LoRA. Les activations conservées pour la rétropropagation ajoutent environ 0,4 à 0,5~Go dans les deux cas. La tête seule (393~Mo) n'a presque pas d'activations à garder. Le rang a un effet négligeable (800 à 806~Mo), car les matrices $A$ et $B$ ne pèsent que quelques centaines de kilooctets.
+
+\paragraph{Stockage.} Le fine-tuning complet produit un checkpoint de 255~Mo par tâche. Un adaptateur LoRA, tête comprise, pèse 2,8~Mo, soit \textbf{90 fois moins}. Un seul modèle de base peut ainsi servir des dizaines de tâches. Le checkpoint de la tête seule pèse lui aussi 255~Mo, car nous l'avons sauvegardé avec \texttt{save\_pretrained}, qui écrit tout le modèle. Seuls 2,3~Mo y sont réellement spécifiques à la tâche.
+
+\paragraph{Inférence.} Après fusion $W=W_0+\frac{\alpha}{r}BA$, le modèle LoRA a exactement l'architecture de DistilBERT. L'évaluation des 872 phrases prend environ 4,9~s pour toutes les méthodes, et la latence d'une phrase dans l'application est d'environ 34~ms sur la GTX~1050. LoRA n'ajoute donc \emph{aucune} latence.
+
+\begin{figure}[H]\centering
+\begin{subfigure}{0.56\textwidth}\includegraphics[width=\textwidth]{loss_curves.pdf}\caption{Perte d'entraînement (moyenne glissante sur 5 points).}\end{subfigure}\hfill
+\begin{subfigure}{0.40\textwidth}\includegraphics[width=\textwidth]{tradeoff.pdf}\caption{Compromis précision et paramètres.}\end{subfigure}
+\caption{Dynamique d'apprentissage et compromis.}
+\label{fig:loss}
+\end{figure}
+
+\paragraph{Dynamique d'apprentissage.} Le fine-tuning complet atteint la perte d'entraînement la plus basse ($\approx0{,}13$ en fin d'entraînement, contre $0{,}2$ à $0{,}3$ pour LoRA), sans meilleure accuracy de validation. La contrainte de rang faible agit donc comme une \emph{régularisation} : LoRA mémorise moins le jeu d'entraînement pour une généralisation équivalente. La tête seule reste au-dessus de $0{,}3$, faute de capacité.
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.92\textwidth]{app_screenshot.png}
+\caption{Capture d'écran de l'application Gradio (\texttt{python app.py}) : l'adaptateur LoRA $r=8$ est fusionné dans DistilBERT et classe la phrase saisie, avec la latence et les métriques du modèle.}
+\label{fig:app}
+\end{figure}
+
+\begin{figure}[H]\centering
+\begin{lstlisting}[language={},basicstyle=\ttfamily\scriptsize]
+$ python -m src.train --method lora --rank 8
+INFO [lora_r8] paramètres entraînables : 739,586 / 67,694,596 (1.093 %)
+INFO [lora_r8] epoch 1 step 200/1250 loss 0.2919
+INFO [lora_r8] epoch 1 - val acc 0.8739 f1 0.8810
+INFO [lora_r8] epoch 2 - val acc 0.8819 f1 0.8872
+INFO [lora_r8] terminé en 302.2 s - acc 0.8819 - pic GPU 804 Mo
+\end{lstlisting}
+\caption{Extrait du journal d'entraînement de LoRA $r=8$ (fichier \texttt{results\_log.txt}).}
+\end{figure}
+
+\paragraph{Limites.} (i) Une seule graine par configuration : les écarts de moins de 2 points ne sont pas significatifs. (ii) La tâche est simple (classification binaire) et le modèle petit. Les gains relatifs de LoRA augmentent avec la taille du modèle, puisque la mémoire de l'optimiseur devient alors dominante. (iii) Les taux d'apprentissage n'ont pas été optimisés séparément pour chaque méthode.
+
+%=====================================================================
+\section{Conclusion}
+%=====================================================================
+Ce projet a implémenté, validé et profilé la méthode LoRA. En gelant DistilBERT et en n'apprenant que des mises à jour de rang $r\le16$ sur $W_q$ et $W_v$, nous obtenons une accuracy statistiquement équivalente au fine-tuning complet sur SST-2 (89,1\,\% contre 89,3\,\%). Le coût est nettement plus faible : 1\,\% des paramètres, $-44\,\%$ de mémoire GPU, $-32\,\%$ de temps d'entraînement et un checkpoint 90 fois plus léger. L'écart de temps mesuré correspond au modèle théorique $2/3$, et notre implémentation à la main reproduit les résultats de la bibliothèque PEFT. L'application Gradio montre qu'un adaptateur fusionné s'utilise exactement comme le modèle d'origine, sans latence supplémentaire.
+
+\paragraph{Perspectives.} Appliquer QLoRA \cite{dettmers2023qlora} pour adapter un LLM génératif sur la même carte de 4~Go. Étendre LoRA à toutes les couches linéaires et comparer avec AdaLoRA et DoRA. Répéter les mesures sur plusieurs graines pour obtenir des intervalles de confiance.

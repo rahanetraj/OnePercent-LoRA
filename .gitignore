@@ -1,0 +1,12 @@
+# Environnement et caches
+.venv/
+__pycache__/
+.pytest_cache/
+
+# Modèles entraînés (529 Mo) : régénérés par ./run_experiments.sh
+models/
+
+# Fichiers temporaires LaTeX
+report/*.aux
+report/*.log
+report/*.out
